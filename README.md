@@ -1,4 +1,4 @@
-# Ledford's BIS 15L Repository
+# Joel's BIS 15L Repository
 
 Welcome! This repository includes homework keys, notes, and additional lessons for BIS 15L students at UC Davis.   
 

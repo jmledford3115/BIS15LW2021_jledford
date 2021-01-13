@@ -157,7 +157,7 @@ hsprings
 
 2. Change the column titled `name` to `scientist`, leave the other column names the same. Print out the data frame names.  
 ```{r}
-hsprings <- data.frame(scientist=name, spring, temp)
+hsprings <- data.frame(scientist=name, spring, tempC=temp)
 hsprings
 ```
 

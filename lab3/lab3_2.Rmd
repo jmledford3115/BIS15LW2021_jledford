@@ -38,6 +38,7 @@ An opinionated word about excel. It is fine to use excel for data entry and basi
 To import any file, first make sure that you are in the correct working directory. If you are not in the correct directory, R will not "see" the file.
 ```{r}
 getwd()
+setwd("~/Desktop/BIS15LW2021_jledford/lab3")
 ```
 
 ## Load the data
@@ -53,9 +54,17 @@ Use the `str()` function to get an idea of the data structure of `hot_springs`.
 str(hot_springs)
 ```
 
+```{r}
+glimpse(hot_springs)
+```
+
 What is the class of the scientist column? Change it to factor and then show the levels of that factor.  
 ```{r}
 class(hot_springs$scientist)
+```
+
+```{r}
+levels(hot_springs$scientist)
 ```
 
 ```{r}
@@ -72,12 +81,16 @@ levels(hot_springs$scientist)
 
 The data are from: Gaeta J., G. Sass, S. Carpenter. 2012. Biocomplexity at North Temperate Lakes LTER: Coordinated Field Studies: Large Mouth Bass Growth 2006. Environmental Data Initiative.  [link](https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-ntl&identifier=267)  
 ```{r}
-
+fish <- readr::read_csv("data/Gaeta_etal_CLC_data.csv")
 ```
 
 2. What is the structure of these data?
 ```{r}
+glimpse(fish)
+```
 
+```{r}
+names(fish)
 ```
 
 Notice that when the data are imported, you are presented with a message that tells you how R interpreted the column classes. This is also where error messages will appear if there are problems.  
@@ -87,7 +100,7 @@ Once data have been uploaded, you may want to get an idea of its structure, cont
 
 We can summarize our data frame with the`summary()` function.  
 ```{r}
-#summary(fish)
+summary(fish)
 ```
 
 `glimpse()` is another useful summary function.
@@ -97,79 +110,96 @@ We can summarize our data frame with the`summary()` function.
 
 `nrow()` gives the numbers of rows.
 ```{r}
-#nrow(fish) #the number of rows or observations
+nrow(fish) #the number of rows or observations
 ```
 
 `ncol` gives the number of columns.
 ```{r}
-#ncol(fish) #the number of columns or variables
+ncol(fish) #the number of columns or variables
 ```
 
 `dim()` gives the dimensions.
 ```{r}
-#dim(fish) #total dimensions
+dim(fish) #total dimensions
 ```
 
 `names` gives the column names.
 ```{r}
-#names(fish) #column names
+names(fish) #column names
 ```
 
 `head()` prints the first n rows of the data frame.
 ```{r}
-#head(fish, n = 10)
+head(fish, n = 10)
 ```
 
 `tail()` prinst the last n rows of the data frame.
 ```{r}
-#tail(fish, n = 10)
+tail(fish, n = 10)
 ```
+
+```{r}
+table(fish$lakeid)
+```
+
+
 
 `table()` is useful when you have a limited number of categorical variables. It produces fast counts of the number of observations in a variable. We will come back to this later... 
 ```{r}
-#table(fish$lakeid)
+table(fish$lakeid)
 ```
 
 We can also click on the `fish` data frame in the Environment tab or type View(fish).
 ```{r}
-#View(fish)
+View(fish)
 ```
 
 ## Subset
 Subset is a way of pulling out observations that meet specific criteria in a variable.  
 ```{r}
-#little_fish <- subset(fish, length<=100)
-#little_fish
+names(fish)
+```
+
+```{r}
+little_fish <- subset(fish, length<=110)
+little_fish
 ```
 
 ## Practice
 1. Load the data `mammal_lifehistories_v2.csv` and place it into a new object called `mammals`.
 ```{r}
-
+mammals <- readr::read_csv("data/mammal_lifehistories_v2.csv")
 ```
 
 2. Provide the dimensions of the data frame.
 ```{r}
-
+dim(mammals)
 ```
 
 3. Check the column names in the data frame. 
 ```{r}
-
+names(mammals)
 ```
 
 4. Use `str()` to show the structure of the data frame and its individual columns; compare this to `glimpse()`. 
 ```{r}
-
+str(mammals)
 ```
 
 ```{r}
-
+glimpse(mammals)
 ```
 
 5. . Try the `table()` command to produce counts of mammal order, family, and genus.  
 ```{r}
+table(mammals$order)
+```
 
+```{r}
+table(mammals$family)
+```
+```{r}
+table(mammals$Genus)
 ```
 
 ## Wrap-up

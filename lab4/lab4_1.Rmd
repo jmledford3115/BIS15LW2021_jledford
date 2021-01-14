@@ -36,12 +36,15 @@ Once data have been uploaded, let's get an idea of its structure, contents, and 
 ```{r}
 glimpse(fish)
 ```
+
 ```{r}
 str(fish)
 ```
+
 ```{r}
 summary(fish)
 ```
+
 ```{r}
 names(fish)
 ```
@@ -211,6 +214,11 @@ When naming columns, blank spaces are often added (don't do this, please). Here 
 ```{r}
 select_all(mammals, ~str_replace(., " ", "_"))
 ```
+
+```{r}
+select_all(mammals, ~str_replace(., "[ ._/]", "" ))
+```
+
 
 ## That's it! Take a break and I will see you on Zoom!  
 

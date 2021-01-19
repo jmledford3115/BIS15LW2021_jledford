@@ -3,9 +3,9 @@ title: "Lab 4 Homework"
 author: "Joel Ledford"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -31,7 +31,7 @@ Data: http://datadryad.org/resource/doi:10.5061/dryad.q5j65/1
 
 Load the data into a new object called `homerange`.
 ```{r}
-homerange <- readr::read_csv("data/Tamburelloetal_HomeRangeDatabase.csv")
+homerange <- readr::read_csv("~/Desktop/BIS15LW2021_jledford/lab4/data/Tamburelloetal_HomeRangeDatabase.csv")
 ```
 
 **1. Load the data into a new object called `homerange`.**

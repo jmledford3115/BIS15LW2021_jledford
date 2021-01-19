@@ -1,7 +1,7 @@
 ---
 title: "Lab 3 Homework"
-author: "Please Add Your Name Here"
-date: "2021-01-14"
+author: "Joel Ledford"
+date: "2021-01-19"
 output:
   html_document: 
     theme: spacelab
@@ -19,16 +19,23 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 library(tidyverse)
 ```
 
-## Mammals Sleep
+## Mammals Sleep  
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class = "blue">
 1. For this assignment, we are going to use built-in data on mammal sleep patterns. From which publication are these data taken from? Since the data are built-in you can use the help function in R.
 
 ```r
-?msleep
+dim(msleep)
 ```
 
-_V. M. Savage and G. B. West. A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007._
+```
+## [1] 83 11
+```
+</div>  
 
-2. Store these data into a new data frame `sleep`.
+2. Store these data into a new data frame `sleep`.  
 
 ```r
 sleep <- data.frame(msleep)

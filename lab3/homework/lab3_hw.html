@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Please Add Your Name Here" />
+<meta name="author" content="Joel Ledford" />
 
-<meta name="date" content="2021-01-14" />
+<meta name="date" content="2021-01-19" />
 
 <title>Lab 3 Homework</title>
 
@@ -388,8 +388,8 @@ summary {
 
 
 <h1 class="title toc-ignore">Lab 3 Homework</h1>
-<h4 class="author">Please Add Your Name Here</h4>
-<h4 class="date">2021-01-14</h4>
+<h4 class="author">Joel Ledford</h4>
+<h4 class="date">2021-01-19</h4>
 
 </div>
 
@@ -405,11 +405,16 @@ summary {
 </div>
 <div id="mammals-sleep" class="section level2">
 <h2>Mammals Sleep</h2>
+<style>
+div.blue { background-color:#e6f0ff; border-radius: 5px; padding: 20px;}
+</style>
+<div class="blue">
 <ol style="list-style-type: decimal">
 <li>For this assignment, we are going to use built-in data on mammal sleep patterns. From which publication are these data taken from? Since the data are built-in you can use the help function in R.</li>
 </ol>
-<pre class="r"><code>?msleep</code></pre>
-<p><em>V. M. Savage and G. B. West. A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007.</em></p>
+<pre class="r"><code>dim(msleep)</code></pre>
+<pre><code>## [1] 83 11</code></pre>
+</div>
 <ol start="2" style="list-style-type: decimal">
 <li>Store these data into a new data frame <code>sleep</code>.</li>
 </ol>

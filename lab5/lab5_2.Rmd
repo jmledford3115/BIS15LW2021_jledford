@@ -36,12 +36,21 @@ superhero_powers <- readr::read_csv("data/super_hero_powers.csv", na = c("", "-9
 ## Data tidy
 1. Some of the names used in the `superhero_info` data are problematic so you should rename them here.  
 ```{r}
-
+names(superhero_info)
 ```
+
+```{r}
+superhero_info <- rename(superhero_info, gender="Gender", eye_color= "Eye color", race="Race", hair_color="Hair color", height="Height", publisher="Publisher", skin_color="Skin color", alignment="Alignment", weight="Weight" )
+```
+
+```{r}
+names(superhero_info)
+```
+
 
 Yikes! `superhero_powers` has a lot of variables that are poorly named. We need some R superpowers...
 ```{r}
-#head(superhero_powers)
+head(superhero_powers)
 ```
 
 ## `janitor`
@@ -52,13 +61,20 @@ library("janitor")
 
 The `clean_names` function takes care of everything in one line! Now that's a superpower!
 ```{r}
-#superhero_powers <- janitor::clean_names(superhero_powers)
+superhero_powers <- janitor::clean_names(superhero_powers)
 ```
 
 ## `tabyl`
 The `janitor` package has many awesome functions that we will explore. Here is its version of `table` which not only produces counts but also percentages. Very handy! Let's use it to explore the proportion of good guys and bad guys in the `superhero_info` data.  
 ```{r}
-#tabyl(superhero_info, alignment)
+tabyl(superhero_info, Alignment)
+```
+```{r}
+names(superhero_info)
+```
+
+```{r}
+tabyl(superhero_info, alignment)
 ```
 
 2. Notice that we have some neutral superheros! Who are they?

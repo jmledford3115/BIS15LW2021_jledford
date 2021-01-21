@@ -59,8 +59,12 @@ penguins %>%
 
 What if we are interested in the number of observations (penguins) by species and island?
 ```{r}
+names(penguins)
+```
+
+```{r}
 penguins %>% 
-  group_by(island, species) %>% 
+  group_by(species, island) %>% 
   summarize(n=n(), .groups= 'keep')#the .groups argument here just prevents a warning message
 ```
 
@@ -83,32 +87,46 @@ penguins %>%
 You can also use `count()` across multiple variables.
 ```{r}
 penguins %>% 
-  count(island, species, sort = F)
+  count(island, species, sort = T)
 ```
 
 For counts, I am starting to prefer `tabyl()`. Lots of options are supported in [tabyl](https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html)
 ```{r}
 penguins %>% 
-  tabyl(species, island)
+  tabyl(island, species)
 ```
 
 ```{r}
 penguins %>% 
   tabyl(species, island) %>% 
   adorn_percentages() %>%
-  adorn_pct_formatting(digits = 1) %>%
-  adorn_ns()
+  adorn_pct_formatting(digits = 2)
 ```
 
 ## Practice
 1. Produce a summary of the mean for bill_length_mm, bill_depth_mm, flipper_length_mm, and body_mass_g within Adelie penguins only. Be sure to provide the number of samples.
 ```{r}
-
+penguins %>% 
+  summarize(mean_bill_length_mm=mean(bill_length_mm, na.rm=T),
+            sd_bill_length_mm=sd(bill_length_mm, na.rm=T),
+            n_samples=n())
 ```
+
+```{r}
+names(penguins)
+```
+
+```{r}
+penguins %>% 
+  summarize(penguin_flippers=mean(flipper_length_mm, na.rm=T))
+```
+
 
 2. How does the mean of `bill_length_mm` compare between penguin species?
 ```{r}
-
+penguins %>% 
+  group_by(species) %>% 
+  summarize(mean_bill_length_mm=mean(bill_length_mm, na.rm=T))
 ```
 
 3. For some penguins, their sex is listed as NA. Where do these penguins occur?
@@ -141,7 +159,7 @@ penguins %>%
 
 `group_by` also works.
 ```{r}
-penguins %>%
+table1 <- penguins %>%
   group_by(sex) %>% 
   summarize(across(contains("mm"), mean, na.rm=T))
 ```
@@ -167,10 +185,21 @@ penguins %>%
 
 ## Practice
 1. Produce separate summaries of the mean and standard deviation for bill_length_mm, bill_depth_mm, and flipper_length_mm for each penguin species. Be sure to provide the number of samples.  
+mean
 ```{r}
-
+penguins %>% 
+  group_by(species) %>% 
+  summarise(across(contains("mm"), mean, na.rm=T),
+            nsamples=n())
 ```
 
+sd
+```{r}
+penguins %>% 
+  group_by(species) %>% 
+  summarise(across(contains("mm"), sd, na.rm=T),
+            nsamples=n())
+```
 
 ## Wrap-up  
 

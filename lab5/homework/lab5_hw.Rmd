@@ -76,11 +76,15 @@ not_human$name
 ## Good and Evil
 5. Let's make two different data frames, one focused on the "good guys" and another focused on the "bad guys".
 ```{r}
-good_guys <- superhero_info %>% filter(alignment=="good")
+good_guys <- 
+  superhero_info %>% 
+  filter(alignment=="good")
 ```
 
 ```{r}
-bad_guys <- superhero_info %>% filter(alignment=="bad")
+bad_guys <- 
+  superhero_info %>% 
+  filter(alignment=="bad")
 ```
 
 6. For the good guys, use the `tabyl` function to summarize their "race".
@@ -99,16 +103,39 @@ bad_guys %>% filter(race=="Human" & height>=200)
 ```
 
 9. OK, so are there more good guys or bad guys that are bald (personal interest)?
+
+_There are more bald good guys!_  
+
 ```{r}
-good_guys %>% filter(hair_color=="No Hair")
+good_guys %>% 
+  filter(hair_color=="No Hair")
 ```
 
 ```{r}
-bad_guys %>% filter(hair_color=="No Hair")
+bad_guys %>% 
+  filter(hair_color=="No Hair")
 ```
 
 ```{r}
-superhero_info %>% tabyl(hair_color, alignment)
+table(superhero_info$hair_color, superhero_info$alignment)
+```
+
+```{r}
+superhero_info %>% 
+  tabyl(hair_color, alignment)
+```
+
+```{r}
+superhero_info %>% 
+  filter(hair_color=="No Hair") %>% 
+  group_by(alignment) %>% 
+  summarise(n=n())
+```
+
+```{r}
+superhero_info %>% 
+  filter(hair_color=="No Hair") %>% 
+  count(hair_color, alignment)
 ```
 
 10. Let's explore who the really "big" superheros are. In the `superhero_info` data, which have a height over 300 or weight over 450?
@@ -137,6 +164,16 @@ superhero_info %>%
 
 ## Height to Weight Ratio
 13. It's easy to be strong when you are heavy and tall, but who is heavy and short? Which superheros have the lowest height to weight ratio?
+
+```{r}
+names(superhero_info)
+```
+
+```{r}
+superhero_info %>% 
+  mutate(doubled_height=height*2)
+```
+
 ```{r}
 superhero_info %>% 
   mutate(height_weight_ratio=height/weight) %>% 
@@ -146,6 +183,15 @@ superhero_info %>%
 
 ## `superhero_powers`
 Have a quick look at the `superhero_powers` data frame.  
+```{r}
+glimpse(superhero_powers)
+names(superhero_powers)
+str(superhero_powers)
+```
+```{r}
+tabyl(superhero_powers, durability)
+```
+
 ```{r}
 head(superhero_powers)
 ```

@@ -99,7 +99,7 @@ good_guys %>% filter(race=="Asgardian")
 
 8. Among the bad guys, who are the male humans over 200 inches in height?
 ```{r}
-bad_guys %>% filter(race=="Human" & height>=200)
+bad_guys %>% filter(race=="Human" & gender=="Male" & height>=200)
 ```
 
 9. OK, so are there more good guys or bad guys that are bald (personal interest)?
@@ -207,7 +207,11 @@ superhero_powers %>%
 ```{r}
 kinesis <- superhero_powers %>% 
   select(hero_names, ends_with("kinesis")) %>% 
+<<<<<<< HEAD
   filter_all(any_vars(.== "TRUE")) 
+=======
+  filter_all(any_vars(.== "TRUE"))
+>>>>>>> bca024b4b2a70eee8e3a25267e18ed95fcce2147
 kinesis
 ```
 

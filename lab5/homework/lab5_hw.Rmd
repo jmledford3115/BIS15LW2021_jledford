@@ -205,14 +205,10 @@ superhero_powers %>%
 ## `kinesis`
 15. We are only interested in the superheros that do some kind of "kinesis". How would we isolate them from the `superhero_powers` data?
 ```{r}
-kinesis <- superhero_powers %>% 
+kinesis <- 
+  superhero_powers %>% 
   select(hero_names, ends_with("kinesis")) %>% 
-<<<<<<< HEAD
-  filter_all(any_vars(.== "TRUE")) 
-=======
   filter_all(any_vars(.== "TRUE"))
->>>>>>> bca024b4b2a70eee8e3a25267e18ed95fcce2147
-kinesis
 ```
 
 16. Pick your favorite superhero and let's see their powers!

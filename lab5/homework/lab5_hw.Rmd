@@ -206,7 +206,8 @@ superhero_powers %>%
 15. We are only interested in the superheros that do some kind of "kinesis". How would we isolate them from the `superhero_powers` data?
 ```{r}
 kinesis <- superhero_powers %>% 
-  select(hero_names, ends_with("kinesis"))
+  select(hero_names, ends_with("kinesis")) %>% 
+  filter_all(any_vars(.== "TRUE"))
 kinesis
 ```
 

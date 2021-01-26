@@ -144,6 +144,9 @@ penguins %>%
             distinct_island = n_distinct(island),
             distinct_sex = n_distinct(sex))
 ```
+```{r}
+names(penguins)
+```
 
 By using `across()` we can reduce the clutter and make things cleaner. 
 ```{r}

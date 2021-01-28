@@ -19,7 +19,7 @@ output:
 Please take 5-8 minutes to check over your answers to HW 6 in your group. If you are stuck, please remember that you can check the key in [Joel's repository](https://github.com/jmledford3115/BIS15LW2021_jledford).  
 
 ## Midterm 1 Review
-Let's briefly review the questions from midterm 1 so you can get an idea of how I was thinking about the problems. Remember, there is more than one way to get at these answers, so don't worry if yours looks different than mine!
+Let's briefly review the questions from midterm 1 so you can get an idea of how I was thinking about the problems. Remember, there is more than one way to get at these answers, so don't worry if yours looks different than mine!  
 
 ## Load the libraries
 ```{r message=FALSE, warning=FALSE}
@@ -41,40 +41,61 @@ life_history <- readr::read_csv("data/mammal_lifehistories_v3.csv")
 life_history <- janitor::clean_names(life_history)
 ```
 
+```{r}
+glimpse(life_history)
+```
+
+```{r}
+summary(life_history)
+```
+
 2. Use one or more of the functions from the last lab to determine if there are NA's in the data, how they are represented, and where they are located.
+```{r}
+life_history %>% 
+  purrr::map_df(~ sum(is.na(.)))
+```
+```{r}
+hist(life_history$wean_mass)
+```
 
 
 3. Can we use a single approach to deal with NA's in this data set? Given what you learned in the previous lab, how would you manage the NA values?
+
+```{r}
+life_history_tidy <- life_history %>% 
+  na_if("-999") %>% 
+  mutate(newborn=na_if(newborn, ("not measured")))
+```
 
 ## `naniar`
 `naniar` is a package that is built to manage NA's. Many of the functions it performs can also be performed using tidyverse functions, but it does provide some interesting alternatives.  
 
 `miss_var_summary` provides a clean summary of NA's across the data frame.
 ```{r}
-#naniar::miss_var_summary(life_history_tidy)
+naniar::miss_var_summary(life_history_tidy)
 ```
 
 Notice that `max_life` has no NA's. Does that make sense in the context of this data?
 ```{r}
-#hist(life_history_tidy$max_life)
+hist(life_history_tidy$max_life)
 ```
 
 ```{r}
-#life_history_tidy <- 
-#  life_history_tidy %>% 
-#  mutate(max_life=na_if(max_life, 0))
+life_history_tidy <- 
+  life_history_tidy %>% 
+  mutate(max_life=na_if(max_life, 0))
 ```
 
 ```{r}
-#naniar::miss_var_summary(life_history_tidy)
+naniar::miss_var_summary(life_history_tidy)
 ```
 
 We can also use `miss_var_summary` with `group_by()`. This helps us better evaluate where NA's are in the data.
 ```{r}
-#life_history_tidy %>%
-#  group_by(order) %>%
-#  select(order, wean_mass) %>% 
-#  naniar::miss_var_summary(order=T)
+life_history_tidy %>%
+  group_by(order) %>%
+  select(order, wean_mass) %>% 
+  naniar::miss_var_summary(order=T)
 ```
 
 `naniar` also has a nice replace function which will allow you to precisely control which values you want replaced with NA's in each variable.
@@ -91,11 +112,25 @@ Some key information:
 [country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)  
 
 1. Import the data and do a little exploration. Be sure to clean the names if necessary.
+```{r}
+cites <- readr::read_csv(file="data/cites.csv")
+cites <- janitor::clean_names(cites)
+cites$year <- as.factor(cites$year)
+```
 
 2. Use `naniar` to summarize the NA's in each variable.
+```{r}
+naniar::miss_var_summary(cites)
+```
 
 3. Try using `group_by()` with `naniar`. Look specifically at class and `exporter_reported_quantity`. For which taxonomic classes do we have a high proportion of missing export data?
-
+```{r}
+cites %>%
+  group_by(class) %>%
+  select(class, exporter_reported_quantity) %>% 
+  naniar::miss_var_summary() %>% 
+  arrange(desc(pct_miss))
+```
 
 ## Visualizing NAs
 There is another package `visdat` that can be used to visualize the proportion of different classes of data, including missing data. But, it is limited by size.
@@ -104,11 +139,11 @@ library(visdat)
 ```
 
 ```{r}
-#vis_dat(life_history_tidy) #classes of data
+vis_dat(life_history_tidy) #classes of data
 ```
 
 ```{r}
-#vis_miss(life_history_tidy)
+vis_miss(life_history_tidy)
 ```
 
 ## Dealing with NA's in advance

@@ -1,7 +1,7 @@
 ---
 title: "Lab 7 Homework"
 author: "Please Add Your Name Here"
-date: "2021-01-31"
+date: "2021-02-01"
 output:
   html_document: 
     theme: spacelab
@@ -227,8 +227,7 @@ amphibio %>% summarize(number_nas = sum(is.na(amphibio)))
 
 ```r
 amniota_tidy <- amniota %>% 
-  na_if("-999") %>% 
-  na_if("-30258.711")
+  na_if("-999") #convert all -999 values to NA
 ```
 
 
@@ -241,7 +240,104 @@ amniota_tidy %>%
 ## # A tibble: 1 x 1
 ##   number_nas
 ##        <int>
-## 1     528200
+## 1     528196
+```
+
+
+```r
+amniota_tidy %>% 
+  filter(female_maturity_d=="-30258.711") 
+```
+
+```
+## # A tibble: 4 x 36
+##   class order family genus species subspecies common_name female_maturity…
+##   <chr> <chr> <chr>  <chr> <chr>        <dbl> <chr>                  <dbl>
+## 1 Aves  Acci… Accip… Circ… melano…         NA Pied Harri…          -30259.
+## 2 Aves  Pass… Vidui… Vidua funerea         NA Dusky Indi…          -30259.
+## 3 Aves  Pass… Vidui… Vidua nigeri…         NA Quailfinch…          -30259.
+## 4 Aves  Pass… Vidui… Vidua purpur…         NA Purple Ind…          -30259.
+## # … with 28 more variables: litter_or_clutch_size_n <dbl>,
+## #   litters_or_clutches_per_y <dbl>, adult_body_mass_g <dbl>,
+## #   maximum_longevity_y <dbl>, gestation_d <dbl>, weaning_d <dbl>,
+## #   birth_or_hatching_weight_g <dbl>, weaning_weight_g <dbl>, egg_mass_g <dbl>,
+## #   incubation_d <dbl>, fledging_age_d <dbl>, longevity_y <dbl>,
+## #   male_maturity_d <dbl>, inter_litter_or_interbirth_interval_y <dbl>,
+## #   female_body_mass_g <dbl>, male_body_mass_g <dbl>, no_sex_body_mass_g <dbl>,
+## #   egg_width_mm <dbl>, egg_length_mm <dbl>, fledging_mass_g <dbl>,
+## #   adult_svl_cm <dbl>, male_svl_cm <dbl>, female_svl_cm <dbl>,
+## #   birth_or_hatching_svl_cm <dbl>, female_svl_at_maturity_cm <dbl>,
+## #   female_body_mass_at_maturity_g <dbl>, no_sex_svl_cm <dbl>,
+## #   no_sex_maturity_d <dbl>
+```
+
+
+```r
+names(amniota_tidy)
+```
+
+```
+##  [1] "class"                                
+##  [2] "order"                                
+##  [3] "family"                               
+##  [4] "genus"                                
+##  [5] "species"                              
+##  [6] "subspecies"                           
+##  [7] "common_name"                          
+##  [8] "female_maturity_d"                    
+##  [9] "litter_or_clutch_size_n"              
+## [10] "litters_or_clutches_per_y"            
+## [11] "adult_body_mass_g"                    
+## [12] "maximum_longevity_y"                  
+## [13] "gestation_d"                          
+## [14] "weaning_d"                            
+## [15] "birth_or_hatching_weight_g"           
+## [16] "weaning_weight_g"                     
+## [17] "egg_mass_g"                           
+## [18] "incubation_d"                         
+## [19] "fledging_age_d"                       
+## [20] "longevity_y"                          
+## [21] "male_maturity_d"                      
+## [22] "inter_litter_or_interbirth_interval_y"
+## [23] "female_body_mass_g"                   
+## [24] "male_body_mass_g"                     
+## [25] "no_sex_body_mass_g"                   
+## [26] "egg_width_mm"                         
+## [27] "egg_length_mm"                        
+## [28] "fledging_mass_g"                      
+## [29] "adult_svl_cm"                         
+## [30] "male_svl_cm"                          
+## [31] "female_svl_cm"                        
+## [32] "birth_or_hatching_svl_cm"             
+## [33] "female_svl_at_maturity_cm"            
+## [34] "female_body_mass_at_maturity_g"       
+## [35] "no_sex_svl_cm"                        
+## [36] "no_sex_maturity_d"
+```
+
+
+```r
+amniota_tidy %>% 
+  select(genus, species, female_maturity_d) %>% 
+  mutate(female_maturity_d2=ifelse(female_maturity_d<0, NA, female_maturity_d))%>% 
+  arrange(female_maturity_d2)
+```
+
+```
+## # A tibble: 21,322 x 4
+##    genus        species       female_maturity_d female_maturity_d2
+##    <chr>        <chr>                     <dbl>              <dbl>
+##  1 Microtus     californicus               23.8               23.8
+##  2 Lemmus       lemmus                     24                 24  
+##  3 Microtus     canicaudus                 24.9               24.9
+##  4 Microtus     montanus                   24.9               24.9
+##  5 Eolagurus    luteus                     27.2               27.2
+##  6 Oligoryzomys destructor                 27.7               27.7
+##  7 Oligoryzomys longicaudatus              27.7               27.7
+##  8 Oligoryzomys magellanicus               27.7               27.7
+##  9 Akodon       molinae                    28.1               28.1
+## 10 Ototylomys   phyllotis                  28.2               28.2
+## # … with 21,312 more rows
 ```
 
 **6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.**  
@@ -331,7 +427,7 @@ amphibio %>%
 
 ```r
 amniota_pre <- 
-  readr::read_csv(file = "data/amniota.csv", na = c("-999", "-30258.711"))
+  readr::read_csv(file = "data/amniota.csv", na = c("-999"))
 ```
 
 ```

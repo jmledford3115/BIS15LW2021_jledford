@@ -11,7 +11,7 @@
 
 <meta name="author" content="Please Add Your Name Here" />
 
-<meta name="date" content="2021-01-31" />
+<meta name="date" content="2021-02-01" />
 
 <title>Lab 7 Homework</title>
 
@@ -399,7 +399,7 @@ summary {
 
 <h1 class="title toc-ignore">Lab 7 Homework</h1>
 <h4 class="author">Please Add Your Name Here</h4>
-<h4 class="date">2021-01-31</h4>
+<h4 class="date">2021-02-01</h4>
 
 </div>
 
@@ -563,14 +563,89 @@ Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017). “Amph
 ## 1     170691</code></pre>
 <p><strong>5. Make any necessary replacements in the data such that all NA’s appear as “NA”.</strong></p>
 <pre class="r"><code>amniota_tidy &lt;- amniota %&gt;% 
-  na_if(&quot;-999&quot;) %&gt;% 
-  na_if(&quot;-30258.711&quot;)</code></pre>
+  na_if(&quot;-999&quot;) #convert all -999 values to NA</code></pre>
 <pre class="r"><code>amniota_tidy %&gt;% 
   summarize(number_nas = sum(is.na(amniota_tidy))) #how many NAs</code></pre>
 <pre><code>## # A tibble: 1 x 1
 ##   number_nas
 ##        &lt;int&gt;
-## 1     528200</code></pre>
+## 1     528196</code></pre>
+<pre class="r"><code>amniota_tidy %&gt;% 
+  filter(female_maturity_d==&quot;-30258.711&quot;) </code></pre>
+<pre><code>## # A tibble: 4 x 36
+##   class order family genus species subspecies common_name female_maturity…
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt;
+## 1 Aves  Acci… Accip… Circ… melano…         NA Pied Harri…          -30259.
+## 2 Aves  Pass… Vidui… Vidua funerea         NA Dusky Indi…          -30259.
+## 3 Aves  Pass… Vidui… Vidua nigeri…         NA Quailfinch…          -30259.
+## 4 Aves  Pass… Vidui… Vidua purpur…         NA Purple Ind…          -30259.
+## # … with 28 more variables: litter_or_clutch_size_n &lt;dbl&gt;,
+## #   litters_or_clutches_per_y &lt;dbl&gt;, adult_body_mass_g &lt;dbl&gt;,
+## #   maximum_longevity_y &lt;dbl&gt;, gestation_d &lt;dbl&gt;, weaning_d &lt;dbl&gt;,
+## #   birth_or_hatching_weight_g &lt;dbl&gt;, weaning_weight_g &lt;dbl&gt;, egg_mass_g &lt;dbl&gt;,
+## #   incubation_d &lt;dbl&gt;, fledging_age_d &lt;dbl&gt;, longevity_y &lt;dbl&gt;,
+## #   male_maturity_d &lt;dbl&gt;, inter_litter_or_interbirth_interval_y &lt;dbl&gt;,
+## #   female_body_mass_g &lt;dbl&gt;, male_body_mass_g &lt;dbl&gt;, no_sex_body_mass_g &lt;dbl&gt;,
+## #   egg_width_mm &lt;dbl&gt;, egg_length_mm &lt;dbl&gt;, fledging_mass_g &lt;dbl&gt;,
+## #   adult_svl_cm &lt;dbl&gt;, male_svl_cm &lt;dbl&gt;, female_svl_cm &lt;dbl&gt;,
+## #   birth_or_hatching_svl_cm &lt;dbl&gt;, female_svl_at_maturity_cm &lt;dbl&gt;,
+## #   female_body_mass_at_maturity_g &lt;dbl&gt;, no_sex_svl_cm &lt;dbl&gt;,
+## #   no_sex_maturity_d &lt;dbl&gt;</code></pre>
+<pre class="r"><code>names(amniota_tidy)</code></pre>
+<pre><code>##  [1] &quot;class&quot;                                
+##  [2] &quot;order&quot;                                
+##  [3] &quot;family&quot;                               
+##  [4] &quot;genus&quot;                                
+##  [5] &quot;species&quot;                              
+##  [6] &quot;subspecies&quot;                           
+##  [7] &quot;common_name&quot;                          
+##  [8] &quot;female_maturity_d&quot;                    
+##  [9] &quot;litter_or_clutch_size_n&quot;              
+## [10] &quot;litters_or_clutches_per_y&quot;            
+## [11] &quot;adult_body_mass_g&quot;                    
+## [12] &quot;maximum_longevity_y&quot;                  
+## [13] &quot;gestation_d&quot;                          
+## [14] &quot;weaning_d&quot;                            
+## [15] &quot;birth_or_hatching_weight_g&quot;           
+## [16] &quot;weaning_weight_g&quot;                     
+## [17] &quot;egg_mass_g&quot;                           
+## [18] &quot;incubation_d&quot;                         
+## [19] &quot;fledging_age_d&quot;                       
+## [20] &quot;longevity_y&quot;                          
+## [21] &quot;male_maturity_d&quot;                      
+## [22] &quot;inter_litter_or_interbirth_interval_y&quot;
+## [23] &quot;female_body_mass_g&quot;                   
+## [24] &quot;male_body_mass_g&quot;                     
+## [25] &quot;no_sex_body_mass_g&quot;                   
+## [26] &quot;egg_width_mm&quot;                         
+## [27] &quot;egg_length_mm&quot;                        
+## [28] &quot;fledging_mass_g&quot;                      
+## [29] &quot;adult_svl_cm&quot;                         
+## [30] &quot;male_svl_cm&quot;                          
+## [31] &quot;female_svl_cm&quot;                        
+## [32] &quot;birth_or_hatching_svl_cm&quot;             
+## [33] &quot;female_svl_at_maturity_cm&quot;            
+## [34] &quot;female_body_mass_at_maturity_g&quot;       
+## [35] &quot;no_sex_svl_cm&quot;                        
+## [36] &quot;no_sex_maturity_d&quot;</code></pre>
+<pre class="r"><code>amniota_tidy %&gt;% 
+  select(genus, species, female_maturity_d) %&gt;% 
+  mutate(female_maturity_d2=ifelse(female_maturity_d&lt;0, NA, female_maturity_d))%&gt;% 
+  arrange(female_maturity_d2)</code></pre>
+<pre><code>## # A tibble: 21,322 x 4
+##    genus        species       female_maturity_d female_maturity_d2
+##    &lt;chr&gt;        &lt;chr&gt;                     &lt;dbl&gt;              &lt;dbl&gt;
+##  1 Microtus     californicus               23.8               23.8
+##  2 Lemmus       lemmus                     24                 24  
+##  3 Microtus     canicaudus                 24.9               24.9
+##  4 Microtus     montanus                   24.9               24.9
+##  5 Eolagurus    luteus                     27.2               27.2
+##  6 Oligoryzomys destructor                 27.7               27.7
+##  7 Oligoryzomys longicaudatus              27.7               27.7
+##  8 Oligoryzomys magellanicus               27.7               27.7
+##  9 Akodon       molinae                    28.1               28.1
+## 10 Ototylomys   phyllotis                  28.2               28.2
+## # … with 21,312 more rows</code></pre>
 <p><strong>6. Use the package <code>naniar</code> to produce a summary, including percentages, of missing data in each column for the <code>amniota</code> data.</strong></p>
 <pre class="r"><code>naniar::miss_var_summary(amniota_tidy) #how many NAs with percentages</code></pre>
 <pre><code>## # A tibble: 36 x 3
@@ -626,7 +701,7 @@ Oliveira BF, São-Pedro VA, Santos-Barrera G, Penone C, Costa GC (2017). “Amph
 ## 1  6053  1104  4347  2810</code></pre>
 <p><strong>10. Now that we know how NA’s are represented in the <code>amniota</code> data, how would you load the data such that the values which represent NA’s are automatically converted?</strong></p>
 <pre class="r"><code>amniota_pre &lt;- 
-  readr::read_csv(file = &quot;data/amniota.csv&quot;, na = c(&quot;-999&quot;, &quot;-30258.711&quot;))</code></pre>
+  readr::read_csv(file = &quot;data/amniota.csv&quot;, na = c(&quot;-999&quot;))</code></pre>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
 ## cols(

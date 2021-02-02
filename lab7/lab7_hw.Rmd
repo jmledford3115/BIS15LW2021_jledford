@@ -77,13 +77,28 @@ amphibio %>% summarize(number_nas = sum(is.na(amphibio)))
 **5. Make any necessary replacements in the data such that all NA's appear as "NA".**   
 ```{r}
 amniota_tidy <- amniota %>% 
-  na_if("-999") %>% 
-  na_if("-30258.711")
+  na_if("-999") #convert all -999 values to NA
 ```
 
 ```{r}
 amniota_tidy %>% 
   summarize(number_nas = sum(is.na(amniota_tidy))) #how many NAs
+```
+
+```{r}
+amniota_tidy %>% 
+  filter(female_maturity_d=="-30258.711") 
+```
+
+```{r}
+names(amniota_tidy)
+```
+
+```{r}
+amniota_tidy %>% 
+  select(genus, species, female_maturity_d) %>% 
+  mutate(female_maturity_d2=ifelse(female_maturity_d<0, NA, female_maturity_d))%>% 
+  arrange(female_maturity_d2)
 ```
 
 **6. Use the package `naniar` to produce a summary, including percentages, of missing data in each column for the `amniota` data.**  
@@ -117,7 +132,7 @@ amphibio %>%
 **10. Now that we know how NA's are represented in the `amniota` data, how would you load the data such that the values which represent NA's are automatically converted?**
 ```{r}
 amniota_pre <- 
-  readr::read_csv(file = "data/amniota.csv", na = c("-999", "-30258.711"))
+  readr::read_csv(file = "data/amniota.csv", na = c("-999"))
 ```
 
 ## Push your final code to GitHub!

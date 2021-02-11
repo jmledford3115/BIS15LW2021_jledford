@@ -51,16 +51,19 @@ There are many option to change the theme of your plots. Have a look [here](http
 p <- homerange %>% 
   ggplot(aes(x=taxon, fill=trophic.guild))+
   geom_bar(na.rm=T, position="dodge")
-p
 ```
 
 ```{r}
-p+theme_linedraw()+
++  
   theme(axis.text.x = element_text(angle = 60, hjust=1))+
   labs(title = "Observations by Taxon in Homerange Data",
        x = NULL,
-       y= "n",
+       y= "n",#
        fill= "Trophic Guild")
+```
+
+```{r}
+p+theme_classic()
 ```
 
 ## Legends
@@ -87,7 +90,7 @@ ls("package:ggthemes")[grepl("theme_", ls("package:ggthemes"))]
 ```
 
 ```{r}
-p+ theme_pander()+
+p+ theme_stata()+
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 60, hjust=1))+
   labs(title = "Observations by Taxon in Homerange Data",
@@ -106,7 +109,7 @@ Access the help for `RColorBrewer`.
 
 The thing to notice is that there are three different palettes: 1) sequential, 2) diverging, and 3) qualitative. Within each of these there are several selections. You can bring up the colors by using `display.brewer.pal()`. Specify the number of colors that you want and the palette name.
 ```{r}
-display.brewer.pal(8,"PRGn")
+display.brewer.pal(4,"RdGy")
 ```
 
 The [R Color Brewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) website is very helpful for getting an idea of the color palettes. To make things easy, use these two guidelines:
@@ -114,9 +117,21 @@ The [R Color Brewer](http://colorbrewer2.org/#type=sequential&scheme=BuGn&n=3) w
 +`scale_colour_brewer()` is for points  
 +`scale_fill_brewer()` is for fills  
 
+```{r}
+p
+```
+
+```{r}
+?palette
+```
+
 Here I chose the `Paired` palette. Take a moment and experiment with other options.
 ```{r}
-p+scale_fill_brewer(palette = "Paired")+
+p+scale_fill_brewer(palette = "Set1")
+```
+
+```{r}
++
   theme(legend.position = "bottom",
         axis.text.x = element_text(angle = 60, hjust=1))+
   labs(title = "Observations by Taxon in Homerange Data",
@@ -129,11 +144,12 @@ p+scale_fill_brewer(palette = "Paired")+
 You can also use `paleteer` to build a custom palette for consistency. To access the `paleteer` collection, I add it to a new object.
 ```{r}
 colors <- paletteer::palettes_d_names
+view(colors)
 ```
 
 Now we can display the palettes. Assign the palette to `my_palette` and then build this base R bar plot. There are a lot of options; `paleteer` is a collection of popular palettes. I really like the [`ggsci` package] (https://cran.r-project.org/web/packages/ggsci/vignettes/ggsci.html)
 ```{r}
-my_palette <- paletteer_d("ggsci::hallmarks_light_cosmic")
+my_palette <- paletteer_d("ggsci::springfield_simpsons")
 ```
 
 ```{r}
@@ -157,19 +173,24 @@ There are many options for adjusting the x and y axes. For details, look over ex
 homerange %>% 
   ggplot(aes(x = log10.mass, y = log10.hra, color = locomotion)) +
   geom_point() +
-  xlim(0, 4) +
-  ylim(1, 6)
+  annotate("text", label="r^2==0", parse=T, x=6, y=0)
 ```
 
 ## Practice
 1. Revisit the relationship between mass and homerange using a scatterplot, but color the points by taxonomic class using a custom color theme.
 ```{r}
-
+homerange %>% 
+  ggplot(aes(x=log10.mass, y=log10.hra, color=class))+
+  geom_point()+
+  scale_color_brewer(palette = "BrBG")
 ```
 
-2. Build bar plots that show the representation by taxonomic class with carnivores and herbivores. Try using a color theme that matches your scatterplot to keep everything consistent.
+2. Build bar plots that show the representation by taxonomic class with carnivores and herbivores. Try using a color theme that matches your scatter plot to keep everything consistent.
 ```{r}
-
+homerange %>% 
+  ggplot(aes(x=trophic.guild, fill=class))+
+  geom_bar(position="dodge")+
+  scale_fill_manual(values=my_palette)
 ```
 
 ## Faceting: `facet_wrap()`
@@ -179,15 +200,26 @@ p2 <- homerange %>%
   ggplot(aes(x = log10.mass)) +
   geom_density()
 ```
+```{r}
+glimpse(homerange)
+```
 
 ```{r}
-p2+ facet_wrap(~taxon)
+p2+ facet_wrap(~class)
 ```
 
 ## Faceting: `facet_grid()`
-As you can imagine, there are lots of options for faceting. Another useful facet type is `facet_grid`. 
+As you can imagine, there are lots of options for faceting. Another useful facet type is `facet_grid`. Adjusting the labels on faceting [here](https://www.datanovia.com/en/blog/how-to-change-ggplot-facet-labels/).
 ```{r}
 p2+facet_grid(thermoregulation~class)
+```
+
+## Printing
+There are many options to export plots for use outside of R. Here is the basic code to do exports.
+```{r}
+pdf("homerange.pdf")
+p2
+dev.off()
 ```
 
 ## That's it, let's take a break!   

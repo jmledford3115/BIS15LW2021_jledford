@@ -1,11 +1,11 @@
 ---
 title: "Lab 10 Homework"
-author: "Please Add Your Name Here"
+author: "Joel Ledford"
 date: "`r Sys.Date()`"
 output:
-  html_document:
+  html_document: 
     theme: spacelab
-    toc: no
+    keep_md: yes
 ---
 
 ```{r setup, include=FALSE}

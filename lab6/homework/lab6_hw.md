@@ -1,7 +1,7 @@
 ---
 title: "Lab 6 Homework"
-author: "Please Add Your Name Here"
-date: "2021-01-26"
+author: "Joel Ledford"
+date: "2021-02-16"
 output:
   html_document: 
     theme: spacelab
@@ -192,7 +192,7 @@ str(fisheries)
 ```
 
 ```
-## tibble [17,692 × 71] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+## spec_tbl_df [17,692 × 71] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
 ##  $ Country                : chr [1:17692] "Albania" "Albania" "Albania" "Albania" ...
 ##  $ Common name            : chr [1:17692] "Angelsharks, sand devils nei" "Atlantic bonito" "Barracudas nei" "Blue and red shrimp" ...
 ##  $ ISSCAAP group#         : num [1:17692] 38 36 37 45 32 37 33 45 38 57 ...

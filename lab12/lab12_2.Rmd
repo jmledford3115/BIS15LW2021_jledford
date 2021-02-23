@@ -34,6 +34,11 @@ If you completed part 1 of today's lab then you should have the following packag
 #install.packages("albersusa")
 ```
 
+Thanks Sri!
+```{r}
+#devtools::install_github("hrbrmstr/albersusa")
+```
+
 ## Load the libraries
 ```{r, message = FALSE}
 library(tidyverse)
@@ -68,12 +73,13 @@ Now we set the bounding box.
 ```{r}
 lat <- c(34.67, 41.80)
 long <- c(-124.1, -115.5)
-bbox <- make_bbox(long, lat, f = 0.05)
+
+bbox <- make_bbox(long, lat, f=0.05)
 ```
 
 Let's get a base map for our bounding box area. We will use the stamen maps because they are free. There are several different map types, including: `terrain-labels`, `terrain-lines`, `toner`, `toner-2011`, `toner-background`, `toner-hybrid`, `toner-lines`, `toner-lite`, and `watercolor.`
 ```{r}
-map1 <- get_map(bbox, maptype = "terrain", source = "stamen")
+map1 <- get_map(bbox, maptype="watercolor", source="stamen")
 ```
 
 ```{r}
@@ -83,19 +89,21 @@ ggmap(map1)
 ## Adding Points to Base Map
 `ggmap` works well with `ggplot2`. To add our points we only need to specify the x and y location similar to how we made charts in previous labs. 
 ```{r}
-ggmap(map1) + 
-  geom_point(data = spiders, aes(longitude, latitude)) +
-  labs(x = "Longitude", y = "Latitude", title = "Spider Locations")
+ggmap(map1) +
+  geom_point(data=spiders, aes(longitude, latitude))+
+  labs(x= "Longitude", y= "Latitude", title="Spider Locations")
 ```
 
 ## Practice
 1. Map the spider locations with a different type of base map. Try to adjust the map using different aesthetics including `size`, `color`, and `alpha`.
 ```{r}
-
+map2 <- get_map(bbox, maptype="toner-hybrid", source="stamen")
 ```
 
 ```{r}
-
+ggmap(map2) +
+  geom_point(data=spiders, aes(x=longitude, y=latitude), size=0.5, color="red")+
+  labs(x= "Longitude", y= "Latitude", title="Spider Locations")
 ```
 
 ## Albers USA
@@ -162,18 +170,34 @@ ggplot() +
   theme(panel.grid = element_blank()) +
   theme(legend.position = c(0.9, 0.3)) -> uso_map
 
-ggsave(filename = "map.svg", device = "svg", plot = uso_map, height = 5, width = 7)
+ggsave(filename = "map.pdf", device = "pdf", plot = uso_map, height = 5, width = 7)
 ```
 
 ## Practice
-1. Make a new new column that labels each specimen as occuring in a cave or on the surface. The word "Cave" is part of the locality information.
+1. Make a new new column that labels each specimen as occurring in a cave or on the surface. The word "Cave" is part of the locality information.
 ```{r}
-
+spiders <- spiders %>% 
+  mutate(troglo=if_else(str_detect(locality, "Cave"), "troglo", "epig"))
+spiders
 ```
 
-2. Now adjust the plot abot to give a different color for specimens that occur in caves.
 ```{r}
+?geom_point
+```
 
+2. Now adjust the plot above to give a different color for specimens that occur in caves.
+```{r}
+ggplot() +
+  geom_sf(data = ca_comp, size = 0.125)+
+  geom_sf(data = ca_cnty_comp, size = 0.125)+
+  geom_point(data = spiders, aes(longitude, latitude, color=troglo), shape=2)+
+  labs(x = "Figure 1: Distribution of Usofila spiders")+
+  theme_minimal() +
+  theme(axis.text = element_blank()) +
+  theme(axis.title.x = element_text(hjust=0.5, size = 10)) +
+  theme(axis.title.y = element_blank()) +
+  theme(panel.grid = element_blank()) +
+  theme(legend.position = c(1.1, 0.3))
 ```
 
 ## That's it, let's take a break!   

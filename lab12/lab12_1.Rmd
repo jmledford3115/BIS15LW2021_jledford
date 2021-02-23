@@ -33,15 +33,15 @@ library(janitor)
 library(lubridate)
 ```
 
-Now we can list all of the files in a directory. This isvery helpful when you are working with multiple files at once.
+Now we can list all of the files in a directory. This is very helpful when you are working with multiple files at once.
 ```{r}
-files <- list.files(path = "data/spiders", pattern = ".csv")
+files <- list.files(path="data/spiders", pattern=".csv")
 files
 ```
 
 We can also get the full path names with `full.names = TRUE`.
 ```{r}
-files <- list.files(path = "data/spiders", pattern = ".csv", full.names = TRUE)
+files <- list.files(path="data/spiders", pattern=".csv", full.names=T)
 files
 ```
 
@@ -60,7 +60,8 @@ class(spider_list[[3]])
 ## Practice
 1. What are the names of our list elements?
 ```{r}
-
+names(spider_list[[3]])
+names(spider_list[[1]])
 ```
 
 ## Naming List Elements
@@ -85,6 +86,7 @@ names(spider_list)
 1. Now that our list elements are named, how could we access the Butte County data by name?
 ```{r}
 spider_list$Butte
+spider_list$Humboldt
 ```
 
 ## Merging Files
@@ -148,6 +150,7 @@ Provides the rows in the first table for which there are not matching values in 
 anti_exampleDF <- anti_join(table_A, table_B, by="customer_ID")
 anti_exampleDF
 ```
+
 ## Joining the spider data
 Here, the latitude and longitude for each spider were recorded from the field records at a later date, and now we need to join it to our `spiders_all` data frame. The lat/long were recorded into one single file for each observation. Let's read in the lat/long data.
 ```{r, message = FALSE}
@@ -160,8 +163,8 @@ We will use a join here to merge lat/long to our data frame. Both files contain 
 ## Practice
 1. Which type of join is most appropriate in this case?  
 ```{r}
-spiders_with_locs <- left_join(spiders_all, spiders_locs, by = c("Accession"))
-summary(spiders_with_locs)
+spiders_with_locs <- left_join(spiders_all, spiders_locs, by=c("Accession"))
+spiders_with_locs
 ```
 
 As a side note, joining data can highlight problems or typos with the data when the join does not go as expected.  
@@ -194,7 +197,7 @@ If you want to use base R, then here is the format.
 ```{r}
 as.Date(spiders_with_locs$Date, format = "%d/%m/%y")
 ```
-`
+
 There are many different options for working with dates and datetimes in lubridate including `ymd`, `mdy`, `dmy`, `mdy_hms`, `ymd_hms`.
 ```{r}
 dateformat1 <- "20200922"
@@ -207,23 +210,23 @@ dateformat5 <- "20200922 170000"
 ## Practice 
 1. Convert each of the examples above using lubridate.
 ```{r}
-
+ymd(dateformat1)
 ```
 
 ```{r}
-
+mdy(dateformat2)
 ```
 
 ```{r}
-
+dmy(dateformat3)
 ```
 
 ```{r}
-
+mdy_hms(dateformat4)
 ```
 
 ```{r}
-
+ymd_hms(dateformat5)
 ```
 
 Have a look at these options.

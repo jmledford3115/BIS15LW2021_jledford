@@ -110,7 +110,9 @@ When working with any package on shiny ui appearance, it's important to know how
 We won't use `fluidPage()` with `shinydashboard` but rather `dashboardPage()`. A shiny dashboard contains a minimum of a header, a sidebar, and a body. The `dashboardPage()` still contains the bootstrap grid.  
 ```{r}
 library(shinydashboard)
+```
 
+```{r}
 ui <- dashboardPage(
   dashboardHeader(),
   dashboardSidebar(),
